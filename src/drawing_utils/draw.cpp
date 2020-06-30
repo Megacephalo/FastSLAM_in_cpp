@@ -74,7 +74,7 @@ Draw::Draw() {
 	particle_settings["color"] = "green";
 	particle_settings["linestyle"] = " ";
 	particle_settings["marker"] = "o";
-	particle_settings["markersize"] = "3";
+	particle_settings["markersize"] = "5";
 	particle_settings["linewidth"] = "3.5";
 
 	//observation drawing settings;
@@ -92,11 +92,12 @@ Draw::Draw() {
 	pose_settings["linewidth"] = "5";
 
 	// trajectory setting
-	// traj_settings["color"] = "magenta";
-	// traj_settings["linestyle"] = "--";
-	// traj_settings["marker"] = "o";
 	traj_settings["markersize"] = "3";
 	traj_settings["linewidth"] = "2";
+
+	// line setting
+	line_settings["color"] = "black";
+	line_settings["linestyle"] = ":";
  } /* End of constructor */
  
 void
@@ -112,6 +113,18 @@ Draw::Plot_state( const ParticleSetPtr& particles
 	plot_particles( particles ) ;
 	Drawprobellipse(mu, sigma, 0.6, "r") ; // plot the most likely pose
 	plot_point(mu(0), mu(1)) ;
+
+	// draw robot
+	Drawellipse(mu, 0.15, 0.15, "r") ;
+
+	// Draw the landmarks as registered by the most likely particle
+	DrawLandMarks(most_likely.landmarks) ;
+
+	draw_trajectory(most_likely.history) ;
+
+	// Draw the observation lines
+	Draw_observation_beams(most_likely) ;
+
 	Pause() ;
 } /* End of Plot_state */
 
@@ -195,6 +208,20 @@ void
 Draw::plot_point(const float& x, const float& y) {
 	plt::plot( {x}, {y}, pose_settings ) ;
 } /* End of plot_point */
+
+void
+Draw::Draw_observation_beams(const Particle& particle) {
+	float rob_pos_x = particle.state(0) ;
+	float rob_pos_y = particle.state(1) ;
+	for (auto& landm : particle.landmarks) {
+		if ( landm.observed ) {
+			// draw a line from (rob_pos_x, rob_pos_y) to (landm.x, landm.y)
+			std::vector<float> X = {rob_pos_x, (float)landm.mu(0)} ;
+			std::vector<float> Y = {rob_pos_y, (float)landm.mu(1)} ;
+			plt::plot(X, Y, line_settings) ;
+		}
+	}
+} /* End of Draw_observation_beams */
 
 void
 Draw::Pause(float seconds) {

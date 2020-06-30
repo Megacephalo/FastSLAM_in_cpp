@@ -22,6 +22,7 @@ class Draw {
 	std::map<std::string, std::string> particle_settings ;
 	std::map<std::string, std::string> pose_settings ;
 	std::map<std::string, std::string> traj_settings ;
+	std::map<std::string, std::string> line_settings ;
 
 	void Drawellipse(const Eigen::VectorXd& X, float a, float b, std::string color) ;
 
@@ -32,7 +33,8 @@ class Draw {
 				   , const Eigen::MatrixXd& sigma
 				   , const Particle& most_likely
 				   , const mapPointSet& landmarks
-				   , const Records& sensorRecords) ;
+				   , const Records& sensorRecords
+				   , const std::string& text = std::string("")) ;
 	void draw_basic_frame( const int& x_lower = -2, const int& x_upper = 12
 						 , const int& y_lower = -2, const int& y_upper = 12) ;
 	void Drawprobellipse( Eigen::VectorXd x
@@ -45,6 +47,7 @@ class Draw {
 	void plot_particles(const ParticleSet& particles) ;
 	void plot_particles(const ParticleSetPtr& particlesPtr) ;
 	void plot_point(const float& x, const float& y) ;
+	void Draw_observation_beams(const Particle& particle) ;
 	void Pause(float seconds = 0.01) ;
 	void Clear() ;
 	void Show() ;

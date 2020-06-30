@@ -2,7 +2,6 @@
 #define _PARTICLE_H_
 
 #include <Eigen/Dense>
-#include <list>
 #include <vector>
 #include "landmark.h"
 
@@ -25,7 +24,7 @@ struct Particle {
 	Particle( const Eigen::Vector3d& new_state
 			, const std::vector<Landmark>& landmarks
 			, const float& new_weight
-			, const std::list<Eigen::VectorXd>& new_history) {
+			, const std::vector<Eigen::VectorXd>& new_history) {
 		this->state = new_state ;
 		this->landmarks = landmarks ;
 		this->weight = new_weight ;
@@ -41,10 +40,14 @@ struct Particle {
 		return *this ;
 	} /* End of assignment operator overloading */
 
+	Particle& operator * () {
+		return *this ;
+	} /* End of dereference operator overloading */
+
 	Eigen::Vector3d state ; // (x, y ,theta)
 	std::vector<Landmark> landmarks ; // The estimated pose and certainty of the perceived landmarks
 	float weight ;
-	std::list<Eigen::VectorXd> history ; // the path which contains all the past poses
+	std::vector<Eigen::VectorXd> history ; // the path which contains all the past poses
 
 } ; /* End of class */
 

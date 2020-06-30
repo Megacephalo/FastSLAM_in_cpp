@@ -103,6 +103,7 @@ void
 Draw::Plot_state( const ParticleSetPtr& particles
 				, const Eigen::VectorXd& mu
 				, const Eigen::MatrixXd& sigma
+				, const Particle& most_likely
 				, const mapPointSet& landmarks
 				, const Records& sensorRecords) {
 	Clear() ;
@@ -138,6 +139,21 @@ Draw::draw_trajectory(const std::vector<Eigen::VectorXd>& path, const std::strin
 
 	plt::plot(X, Y, traj_settings) ;
 } /* End of draw_trajectory */
+
+void
+Draw::DrawLandMarks(const LandmarkSet& landmarks) {
+	std::vector<float> X, Y ;
+	for (auto& landm : landmarks) {
+		if (landm.observed) {
+			X.push_back( landm.mu(0) ) ;
+			Y.push_back( landm.mu(1) ) ;
+
+			Drawprobellipse(landm.mu, landm.sigma, 0.4, "b") ;
+		}
+	}
+
+	plt::plot(X, Y, obs_settings) ;
+} /* End of DrawLandMarks */
 
 void
 Draw::DrawLandMarks(const mapPointSet& landmarks) {

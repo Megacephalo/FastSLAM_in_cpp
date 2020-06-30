@@ -30,6 +30,7 @@ class Draw {
 	void Plot_state( const ParticleSetPtr& particles
 				   , const Eigen::VectorXd& mu
 				   , const Eigen::MatrixXd& sigma
+				   , const Particle& most_likely
 				   , const mapPointSet& landmarks
 				   , const Records& sensorRecords) ;
 	void draw_basic_frame( const int& x_lower = -2, const int& x_upper = 12
@@ -39,6 +40,7 @@ class Draw {
 						, float alpha
 						, std::string color) ;
 	void DrawLandMarks(const mapPointSet& landmarks) ;
+	void DrawLandMarks(const LandmarkSet& landmarks) ;
 	void draw_trajectory(const std::vector<Eigen::VectorXd>& path, const std::string& color = "magenta") ;
 	void plot_particles(const ParticleSet& particles) ;
 	void plot_particles(const ParticleSetPtr& particlesPtr) ;

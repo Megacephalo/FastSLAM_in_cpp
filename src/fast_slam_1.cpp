@@ -10,6 +10,7 @@ FastSlam_1::execute( ParticleSetPtr& particles
 	  				, const Eigen::Vector3d& noise ) {
 	particles_ = predict(particles, sensorRecord.odom, noise) ;
 	particles_ = correct(particles_, sensorRecord.observations) ;
+	get_most_likely_paritcle(particles_) ;
 	particles_ = resample(particles_) ;
 
 	return particles_ ;
@@ -169,3 +170,22 @@ FastSlam_1::resample(ParticleSetPtr& particlesPtr) {
 
 	return newParticles ;
 } /* End of resample */
+
+void
+FastSlam_1::get_most_likely_paritcle(const ParticleSetPtr& particlesPtr) {
+	Particle most_likely ;
+	ParticleSet::const_iterator particle ; 
+	for (particle = particlesPtr->begin() ; particle != particlesPtr->end() ; particle++) {
+		if (most_likely.weight < particle->weight) {
+			most_likely = *particle ;
+		}
+	}
+
+	// Update mu and sigma
+	est_pose_ = most_likely.state ;
+
+	// TODO: Get the real covariance
+	cov_ = Eigen::Matrix2d::Zero(2, 2) ;
+	cov_ << 0.001 , 0 		,
+			0.001 , 0	 	;
+} /* End of get_most_likely_paritcle */

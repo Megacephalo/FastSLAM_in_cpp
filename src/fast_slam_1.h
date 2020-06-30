@@ -24,6 +24,8 @@ class FastSlam_1 : public Particle_filter_base {
   	ParticleSetPtr predict(ParticleSetPtr& particlesPtr, const Odometry& odom, const Eigen::Vector3d& noise) ;
   	ParticleSetPtr correct(ParticleSetPtr& particlesPtr, const Observations& observations) ;
   	ParticleSetPtr resample(ParticleSetPtr& particlesPtr) ;
+
+    void get_most_likely_paritcle(const ParticleSetPtr& particlesPtr) ; //!< Update est_pose_ and cov_ from particle of maximum weight
 } ; /* End of class */
 
 #endif /* _FAST_SLAM_1_H_ */

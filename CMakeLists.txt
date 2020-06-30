@@ -98,3 +98,13 @@ target_link_libraries(test_sensor_data_importer
 
 	PF_SLAM
 )
+
+add_executable(test_matplotlib
+	tests/test_matplotlibcpp.cpp
+)
+target_link_libraries(test_matplotlib
+	${GTEST_LIBRARIES}
+	pthread # Required
+
+	Drawer
+)

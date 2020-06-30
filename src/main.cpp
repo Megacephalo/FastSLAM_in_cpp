@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
 	std::string odom_data_file ( "../data/sensor_data.dat" ) ;
 	std::string map_data_file("../data/world.dat") ;
 
-	PF_SLAM pf_SLAM(odom_data_file, map_data_file, false) ;
+	PF_SLAM pf_SLAM(odom_data_file, map_data_file, true, true) ;
 
 	pf_SLAM.run() ;
 

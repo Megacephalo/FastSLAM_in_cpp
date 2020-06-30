@@ -9,7 +9,24 @@ PF_SLAM::PF_SLAM( const std::string& sensor_data_file
 : visualize_(visualize)
 , save_frames_(save_frames)
 {
+	// Tell the user about the current cnfigurations
+	std::cout << "==========================\n" ;
+	std::cout << std::left << std::setw(20) << "Sensor data file: " << sensor_data_file << std::endl ;
+	std::cout << std::left << std::setw(20) << "Map data file: " << map_data_file << std::endl ;
+	std::cout << std::left << std::setw(20) << "Animation: " << (visualize ? "ON" : "OFF") << std::endl ;
+	std::cout << std::left << std::setw(20) << "Frames: " << (save_frames ? "WILL be saved" : "will NOT be saved") << std::endl ;
+	std::cout << std::left << std::setw(20) << "Fast SLAM type: " ;
+	
+	switch(pfSlam_type) {
+		case FAST_SLAM_1:
+			fastSlam_ = 
+				std::unique_ptr<Particle_filter_base>( new FastSlam_1(numParticles) ) ;
+				std::cout << "FastSLAM 1.0" << std::endl ;
+			break ;
+	}
+	std::cout << "==========================\n" ;
 
+	// Import data
 	sensor_import_.import_from(sensor_data_file) ;	
 	all_sensor_records_ = sensor_import_.get() ;
 
@@ -17,12 +34,6 @@ PF_SLAM::PF_SLAM( const std::string& sensor_data_file
 	landmarks_ = map_import_.landmarks() ;
 	int numLandmarks = map_import_.landmark_size() ;
 
-	switch(pfSlam_type) {
-		case FAST_SLAM_1:
-			fastSlam_ = 
-				std::unique_ptr<Particle_filter_base>( new FastSlam_1(numParticles) ) ;
-			break ;
-	}
 
 	noises_ << 0.005 , 0.01, 0.005 ;
 

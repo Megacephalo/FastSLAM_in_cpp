@@ -71,11 +71,11 @@ Draw::Draw() {
 	landmarks_settings["linewidth"] = "5";
 
 	// particles drawing setting
-	particle_settings["color"] = "red";
+	particle_settings["color"] = "green";
 	particle_settings["linestyle"] = " ";
-	particle_settings["marker"] = "+";
-	particle_settings["markersize"] = "10";
-	particle_settings["linewidth"] = "5";
+	particle_settings["marker"] = "o";
+	particle_settings["markersize"] = "3";
+	particle_settings["linewidth"] = "3.5";
 
 	//observation drawing settings;
 	obs_settings["color"] = "blue";
@@ -85,11 +85,11 @@ Draw::Draw() {
 	obs_settings["linewidth"] = "5";
 
 	// pose drawing settings
-	pose_settings["color"] = "green";
+	pose_settings["color"] = "red";
 	pose_settings["linestyle"] = " ";
-	pose_settings["marker"] = "o";
-	pose_settings["markersize"] = "3";
-	pose_settings["linewidth"] = "3.5";
+	pose_settings["marker"] = "+";
+	pose_settings["markersize"] = "10";
+	pose_settings["linewidth"] = "5";
 
 	// trajectory setting
 	// traj_settings["color"] = "magenta";

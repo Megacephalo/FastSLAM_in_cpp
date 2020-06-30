@@ -56,7 +56,7 @@ FastSlam_1::correct(ParticleSetPtr& particlesPtr, const Observations& observatio
 		Eigen::Vector3d pose = particle->state ;
 
 		// process each measurement
-		for (auto obs : observations) {
+		for (auto& obs : observations) {
 			long long landmID = obs.id - 1 ; // since we count from 1 and the computers from 0, the index needs to be adjusted
 
 			Measurement_model z_model((*particle), obs) ;

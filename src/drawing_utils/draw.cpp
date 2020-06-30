@@ -106,7 +106,8 @@ Draw::Plot_state( const ParticleSetPtr& particles
 				, const Eigen::MatrixXd& sigma
 				, const Particle& most_likely
 				, const mapPointSet& landmarks
-				, const Records& sensorRecords) {
+				, const Records& sensorRecords
+				, const std::string& text) {
 	Clear() ;
 	draw_basic_frame(-2, 12, -2, 12) ;
 	DrawLandMarks(landmarks) ;	
@@ -124,6 +125,9 @@ Draw::Plot_state( const ParticleSetPtr& particles
 
 	// Draw the observation lines
 	Draw_observation_beams(most_likely) ;
+
+	// Show legend
+	plt::text(8.5, 10.5, text) ;
 
 	Pause() ;
 } /* End of Plot_state */

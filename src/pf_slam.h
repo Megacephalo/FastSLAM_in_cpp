@@ -5,6 +5,7 @@
 #include <memory>
 #include <iostream>
 #include <iomanip>
+#include <sstream> /* stringstream */
 
 #include "common_typedefs.h"
 #include "draw.h"
@@ -24,6 +25,7 @@ class PF_SLAM {
   	PF_SLAM( const std::string& sensor_data_file
            , const std::string& map_data_file
            , const bool& visualize = false
+           , const bool& save_frames = false
            , const int& numParticles = 100
            , const PF_SLAM_Type& pfSlam_type = FAST_SLAM_1 ) ;
   	void run() ;
@@ -38,6 +40,7 @@ class PF_SLAM {
     Eigen::Vector3d noises_ ;
     ParticleSetPtr particles_ ;
     bool visualize_ ;
+    bool save_frames_ ;
 } ; /* End of class */
 
 #endif /* _PF_SLAM_H_ */

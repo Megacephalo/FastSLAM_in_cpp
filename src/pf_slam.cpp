@@ -3,9 +3,11 @@
 PF_SLAM::PF_SLAM( const std::string& sensor_data_file
 				, const std::string& map_data_file
 				, const bool& visualize
+				, const bool& save_frames
 				, const int& numParticles
 				, const PF_SLAM_Type& pfSlam_type)
 : visualize_(visualize)
+, save_frames_(save_frames)
 {
 
 	sensor_import_.import_from(sensor_data_file) ;	
@@ -58,6 +60,12 @@ PF_SLAM::run() {
 							  , landmarks_ 
 							  , all_sensor_records_
 							  , timestamp_msg) ;
+		}
+
+		if (save_frames_) {
+			std::stringstream ss ;
+			ss << std::setfill('0') << std::setw(3) << sensor_record.odom.timestamp ;
+			drawer_.Save("../images/" + ss.str()) ;
 		}
 	} /* End of for loop */
 

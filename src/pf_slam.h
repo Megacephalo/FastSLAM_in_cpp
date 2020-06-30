@@ -36,7 +36,7 @@ class PF_SLAM {
     Records all_sensor_records_ ;
     mapPointSet landmarks_ ;
     Eigen::Vector3d noises_ ;
-    ParticleSet particles_ ;
+    ParticleSetPtr particles_ ;
     bool visualize_ ;
 } ; /* End of class */
 

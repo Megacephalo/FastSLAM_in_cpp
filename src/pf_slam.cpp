@@ -25,10 +25,10 @@ PF_SLAM::PF_SLAM( const std::string& sensor_data_file
 	noises_ << 0.005 , 0.01, 0.005 ;
 
 	// // initialize the particles array
-	particles_.resize(numParticles) ;
+	particles_ = ParticleSetPtr( new ParticleSet( numParticles ) ) ;
 
 	ParticleSet::iterator particleIt ;
-	for (particleIt = particles_.begin() ; particleIt != particles_.end() ; particleIt++) {
+	for (particleIt = particles_->begin() ; particleIt != particles_->end() ; particleIt++) {
 		particleIt->weight = 1. / numParticles ;
 		particleIt->history.clear() ;
 
@@ -44,7 +44,7 @@ PF_SLAM::run() {
 		std::cout << "timestamp: " << sensor_record.odom.timestamp << std::endl ;
 
 		// Perform the prediction, correction, and resample step of the particle filter
-		fastSlam_->execute(particles_, sensor_record, noises_) ;
+		particles_ = fastSlam_->execute(particles_, sensor_record, noises_) ;
 
 		if (visualize_) {
 			drawer_.Plot_state(particles_, landmarks_ , all_sensor_records_) ;

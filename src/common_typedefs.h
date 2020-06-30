@@ -66,6 +66,11 @@ inline std::ostream& operator << (std::ostream& os, const ParticleSet& particles
 	return os ;
 }
 
+inline std::ostream& operator << (std::ostream& os, const ParticleSetPtr& particlesPtr) {
+	os << *particlesPtr ;
+	return os ;
+}
+
 // MapPoint
 inline std::ostream& operator << (std::ostream& out, const MapPoint& mapPoint) {
 	out << std::to_string(mapPoint.id) << ": (" + std::to_string(mapPoint.x) << ", " << std::to_string(mapPoint.y) << ")" ;

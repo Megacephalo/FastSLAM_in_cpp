@@ -24,11 +24,13 @@ class Particle_filter_base {
 
   	Eigen::Vector3d getEstPose() const ;
   	Eigen::MatrixXd getCovariance() const ;
+    Particle most_likely() const ;
 
   protected:
     int numParticles_ ;  //!< This memeber will be internally referred
   	Eigen::Vector3d est_pose_ ;
   	Eigen::MatrixXd cov_ ;
+    Particle most_likely_ ;
 } ; /* End of class */
 
 #endif /* _PARTICLE_FILTER_BASE_H_ */

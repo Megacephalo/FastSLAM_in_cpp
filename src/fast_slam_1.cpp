@@ -181,6 +181,8 @@ FastSlam_1::get_most_likely_paritcle(const ParticleSetPtr& particlesPtr) {
 		}
 	}
 
+	most_likely_ = most_likely ;
+
 	// Update mu and sigma
 	est_pose_ = most_likely.state ;
 

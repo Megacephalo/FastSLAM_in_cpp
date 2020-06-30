@@ -27,7 +27,11 @@ class Draw {
 
   public:
 	Draw() ;
-	void Plot_state(const ParticleSet& particles, const mapPointSet& landmarks, const Records& sensorRecords) ;
+	void Plot_state( const ParticleSetPtr& particles
+				   , const Eigen::VectorXd& mu
+				   , const Eigen::MatrixXd& sigma
+				   , const mapPointSet& landmarks
+				   , const Records& sensorRecords) ;
 	void draw_basic_frame( const int& x_lower = -2, const int& x_upper = 12
 						 , const int& y_lower = -2, const int& y_upper = 12) ;
 	void Drawprobellipse( Eigen::VectorXd x
@@ -37,6 +41,8 @@ class Draw {
 	void DrawLandMarks(const mapPointSet& landmarks) ;
 	void draw_trajectory(const std::vector<Eigen::VectorXd>& path, const std::string& color = "magenta") ;
 	void plot_particles(const ParticleSet& particles) ;
+	void plot_particles(const ParticleSetPtr& particlesPtr) ;
+	void plot_point(const float& x, const float& y) ;
 	void Pause(float seconds = 0.01) ;
 	void Clear() ;
 	void Show() ;

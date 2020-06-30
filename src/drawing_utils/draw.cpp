@@ -100,13 +100,17 @@ Draw::Draw() {
  } /* End of constructor */
  
 void
-Draw::Plot_state( const ParticleSet& particles
+Draw::Plot_state( const ParticleSetPtr& particles
+				, const Eigen::VectorXd& mu
+				, const Eigen::MatrixXd& sigma
 				, const mapPointSet& landmarks
 				, const Records& sensorRecords) {
 	Clear() ;
-	draw_basic_frame() ;
+	draw_basic_frame(-2, 12, -2, 12) ;
 	DrawLandMarks(landmarks) ;	
 	plot_particles( particles ) ;
+	Drawprobellipse(mu, sigma, 0.6, "r") ; // plot the most likely pose
+	plot_point(mu(0), mu(1)) ;
 	Pause() ;
 } /* End of Plot_state */
 
@@ -149,27 +153,32 @@ void
 Draw::plot_particles(const ParticleSet& particles) {
 	std::vector<float> X, Y ;
 	ParticleSet::const_iterator particle ;
-	Particle most_likely_particle ;
 	for (particle = particles.begin() ; particle != particles.end() ; particle++) {
 		Eigen::Vector3d pose = particle->state ;
 		X.push_back( pose(0) ) ;
 		Y.push_back( pose(1) ) ;
-
-		// Determine the currently most likely particles
-		if ( particle->weight > most_likely_particle.weight ) {
-			most_likely_particle = *particle ;
-		}
 	}
 
-	// plot all particles
-	plt::plot(X, Y, pose_settings) ;
-
-	// Plot most likely particle
-	std::vector<float> max_w_X = {(float)most_likely_particle.state(0)} ;
-	std::vector<float> max_w_Y = {(float)most_likely_particle.state(1)} ;
-	plt::plot(max_w_X, max_w_Y, particle_settings) ;
-
+	plt::plot(X, Y, particle_settings) ;
 } /* End of plot_particles */
+
+void
+Draw::plot_particles(const ParticleSetPtr& particlesPtr) {
+	std::vector<float> X, Y ;
+	ParticleSet::const_iterator particle ;
+	for (particle = particlesPtr->begin() ; particle != particlesPtr->end() ; particle++) {
+		Eigen::Vector3d pose = particle->state ;
+		X.push_back( pose(0) ) ;
+		Y.push_back( pose(1) ) ;
+	}
+
+	plt::plot(X, Y, particle_settings) ;
+} /* End of plot_particles */
+
+void
+Draw::plot_point(const float& x, const float& y) {
+	plt::plot( {x}, {y}, pose_settings ) ;
+} /* End of plot_point */
 
 void
 Draw::Pause(float seconds) {

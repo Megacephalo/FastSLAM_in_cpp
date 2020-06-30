@@ -49,7 +49,7 @@ inline std::ostream& operator << (std::ostream& os, const odom_data& odoms) {
 // Particle
 inline std::ostream& operator << (std::ostream& os, const Particle& particle) {
 	int history_size = particle.history.size() ;
-	int numLandmarks = particle.landmarks.size() ;
+	int numLandmarks = (int)particle.landmarks.size() ;
 	os << "Pose(x: " << std::setw(13) << particle.state(0) << ", y: " << std::setw(13) << particle.state(1) << ", theta: " << std::setw(13) << particle.state(2) << std::setw(5) << ")"
 	   << std::left << std::setw(10) << "weight: " << std::setw(5) << particle.weight
 	   << "history: " << std::setw(3) << history_size << ( (history_size == 1) ? " past pose" : " past poses")

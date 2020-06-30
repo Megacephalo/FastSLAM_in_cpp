@@ -41,7 +41,8 @@ PF_SLAM::PF_SLAM( const std::string& sensor_data_file
 void
 PF_SLAM::run() {
 	for (auto sensor_record : all_sensor_records_) {
-		std::cout << "timestamp: " << sensor_record.odom.timestamp << std::endl ;
+		std::string timestamp_msg = "timestamp: " + std::to_string( sensor_record.odom.timestamp ) ;
+		std::cout << timestamp_msg << std::endl ;
 
 		// Perform the prediction, correction, and resample step of the particle filter
 		particles_ = fastSlam_->execute(particles_, sensor_record, noises_) ;
@@ -49,9 +50,16 @@ PF_SLAM::run() {
 		if (visualize_) {
 			Eigen::VectorXd mu = fastSlam_->getEstPose() ;
 			Eigen::MatrixXd sigma = fastSlam_->getCovariance() ;
-			drawer_.Plot_state(particles_, mu, sigma, landmarks_ , all_sensor_records_) ;
+			Particle most_likely = fastSlam_->most_likely() ;
+			drawer_.Plot_state( particles_
+							  , mu
+							  , sigma
+							  , most_likely
+							  , landmarks_ 
+							  , all_sensor_records_
+							  , timestamp_msg) ;
 		}
-	}
+	} /* End of for loop */
 
 	std::cout << "Reached the end of the data!\n" ;
 

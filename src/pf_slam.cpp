@@ -47,7 +47,9 @@ PF_SLAM::run() {
 		particles_ = fastSlam_->execute(particles_, sensor_record, noises_) ;
 
 		if (visualize_) {
-			drawer_.Plot_state(particles_, landmarks_ , all_sensor_records_) ;
+			Eigen::VectorXd mu = fastSlam_->getEstPose() ;
+			Eigen::MatrixXd sigma = fastSlam_->getCovariance() ;
+			drawer_.Plot_state(particles_, mu, sigma, landmarks_ , all_sensor_records_) ;
 		}
 	}
 

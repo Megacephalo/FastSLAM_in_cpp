@@ -1,8 +1,15 @@
 #include <gtest/gtest.h>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 #include "math_utils.h"
+
+TEST(Math_utils_test, exp_test) {
+	std::cout << "exp(0.0000001)  = " << std::exp(0.0000001) << std::endl ; 
+
+	std::cout << "exp( -9.23488e+10 ) =" << std::exp( -9.23488 * std::pow(10, 10) ) << std::endl ;
+}
 
 TEST(Math_utils_test, cumsum_test) {
 	Math_utils math ;

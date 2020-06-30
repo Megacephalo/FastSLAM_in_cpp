@@ -18,9 +18,9 @@ class Particle_filter_base {
     virtual ~Particle_filter_base()
     {} /* End of virtual destructor */
 
-  	virtual void execute( ParticleSet& particles
-          		  				, const Sensor_record& sensorRecord
-          		  				, const Eigen::Vector3d& noise ) = 0 ;
+  	virtual ParticleSetPtr execute( ParticleSetPtr& particles
+                    		  				, const Sensor_record& sensorRecord
+                    		  				, const Eigen::Vector3d& noise ) = 0 ;
 
   	Eigen::Vector3d getEstPose() const ;
   	Eigen::MatrixXd getCovariance() const ;
